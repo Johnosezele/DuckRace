@@ -1,5 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:duckrace/features/home/presentation/screens/drop_down_menu.dart';
+import 'package:duckrace/features/home/presentation/screens/home_screen.dart';
+import 'package:duckrace/features/splash/presentation/screens/splash_screen.dart';
+import 'package:duckrace/features/sponsor/presentation/screens/register_sponsor_form_screen.dart';
+import 'package:duckrace/features/sponsor/presentation/screens/register_sponsor_screen.dart';
+import 'package:duckrace/features/sponsor/presentation/screens/sponsor_showcase_screen.dart';
+import 'package:duckrace/features/ticket/presentation/screens/ticket_screen.dart';
+import 'package:duckrace/features/updates/presentation/screens/update_detail_screen.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/winners/presentation/screens/winners_screen.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -10,40 +18,41 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/home',
+      name: 'home',
       builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
-      path: '/sponsor',
-      builder: (context, state) => const SponsorScreen(),
-      routes: [
-        GoRoute(
-          path: 'register',
-          builder: (context, state) => const RegisterSponsorScreen(),
-        ),
-        GoRoute(
-          path: 'showcase',
-          builder: (context, state) => const SponsorShowcaseScreen(),
-        ),
-      ],
+      path: '/ticket',
+      name: 'ticket',
+      builder: (context, state) => const TicketScreen(),
     ),
     GoRoute(
-      path: '/updates/:category/:type/:id',
+      path: '/sponsor/register',
+      name: 'registerSponsor',
+      builder: (context, state) => const RegisterSponsorScreen(),
+    ),
+    GoRoute(
+      path: '/sponsor/register-form',
+      name: 'registerSponsorForm',
+      builder: (context, state) => const RegisterSponsorFormScreen(),
+    ),
+    GoRoute(
+      path: '/sponsor/showcase',
+      name: 'sponsorShowcase',
+      builder: (context, state) => const SponsorShowcaseScreen(),
+    ),
+    GoRoute(
+      path: '/updates/:id',
+      name: 'updateDetail',
       builder: (context, state) {
-        final category = state.params['category']!;
-        final type = state.params['type']!;
-        final id = state.params['id']!;
-        
-        switch (type) {
-          case 'text':
-            return EventUpdatesTextView(id: id, category: category);
-          case 'image':
-            return EventUpdatesImageView(id: id, category: category);
-          case 'video':
-            return EventUpdatesVideoView(id: id, category: category);
-          default:
-            return const UpdatesScreen();
-        }
+        final id = state.pathParameters['id']!;
+        return UpdateDetailScreen(updateId: id);
       },
+    ),
+    GoRoute(
+      path: '/winners',
+      name: 'winners',
+      builder: (context, state) => const WinnersScreen(),
     ),
   ],
 );

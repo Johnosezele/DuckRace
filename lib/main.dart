@@ -1,7 +1,7 @@
 import 'package:duckrace/core/types/result.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/config/firebase_config.dart';
 import 'core/config/router.dart';
 import 'core/config/supabase_config.dart';
@@ -14,6 +14,9 @@ final messagingServiceProvider = Provider((ref) => MessagingService());
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Enable back button callback for Android 13+
+  SystemNavigator.setFrameworkHandlesBack(true);
   
   // Initialize Firebase
   await FirebaseConfig.init();
@@ -68,14 +71,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,24 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      body: const Center(
+        child: Text('Welcome to DuckRace!'),
       ),
     );
   }

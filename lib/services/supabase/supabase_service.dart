@@ -3,6 +3,7 @@ import '../../core/exceptions/supabase_exception.dart';
 import '../../features/sponsor/data/models/sponsor_data.dart';
 import '../../features/sponsor/data/models/sponsor_response.dart';
 import '../../features/sponsor/domain/entities/sponsor.dart';
+import '../../features/updates/data/models/update_model.dart';
 
 class SupabaseService {
   final SupabaseClient _client;
@@ -45,6 +46,25 @@ class SupabaseService {
     }
   }
 
+  Future<List<EventUpdate>> getUpdates(String category) async {
+    try {
+      final response = await _client
+        .from('updates')
+        .select()
+        .eq('category', category)
+        .order('created_at', ascending: false);
+      
+      return (response as List)
+        .map((e) => EventUpdate.fromJson(e as Map<String, dynamic>))
+        .toList();
+    } catch (e) {
+      throw SupabaseException(
+        message: 'Failed to fetch updates',
+        error: e,
+      );
+    }
+  }
+
   Future<void> updateSponsorStatus(String id, String status) async {
     try {
       await _client
@@ -54,6 +74,23 @@ class SupabaseService {
     } catch (e) {
       throw SupabaseException(
         message: 'Failed to update sponsor status',
+        error: e,
+      );
+    }
+  }
+
+  Future<EventUpdate> getUpdateById(String updateId) async {
+    try {
+      final response = await _client
+        .from('updates')
+        .select()
+        .eq('id', updateId)
+        .single();
+      
+      return EventUpdate.fromJson(response);
+    } catch (e) {
+      throw SupabaseException(
+        message: 'Failed to fetch update details',
         error: e,
       );
     }

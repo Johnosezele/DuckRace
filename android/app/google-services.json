@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1028275901971",
+    "project_id": "duckrace-51e68",
+    "storage_bucket": "duckrace-51e68.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028275901971:android:93cb4f0ccc4f15886711e6",
+        "android_client_info": {
+          "package_name": "com.example.duckrace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKQ6Ru6HVEwLDtq0eNTF3RpEEsOt2c_Q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
